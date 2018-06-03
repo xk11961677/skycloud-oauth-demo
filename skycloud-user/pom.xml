@@ -1,0 +1,206 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.skycloud</groupId>
+        <artifactId>skycloud-admin</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.skycloud</groupId>
+    <artifactId>skycloud-user</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>skycloud-user</name>
+    <description>用户中心</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.skycloud</groupId>
+            <artifactId>skycloud-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.skycloud</groupId>
+            <artifactId>skycloud-mybaits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.skycloud</groupId>
+            <artifactId>skycloud-auth-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.skycloud</groupId>
+            <artifactId>skycloud-api</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- spring dev -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.4.2.RELEASE</version>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>com.skycloud.user.UserApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <!--与 mvc  phase 中 package 关联 docker 创建image-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>tag-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>tag</goal>
+                        </goals>
+                        <configuration>
+                            <image>
+                                ${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
+                            </image>
+                            <newName>
+                                ${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
+                            </newName>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>push-image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <imageName>
+                                ${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
+                            </imageName>
+                        </configuration>
+                    </execution>
+
+                </executions>
+
+                <configuration>
+                    <!-- 私有仓库配置，需要settings.xml文件配合serverId对应的服务地址 -->
+                    <serverId>docker-aliyun</serverId>
+                    <registryUrl>${docker.repostory}</registryUrl>
+                    <!--<skipDockerBuild>true</skipDockerBuild>-->
+                    <imageName>
+                        ${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
+                    </imageName>
+                    <!--install阶段也上传，否则只有deploy阶段上传-->
+                    <pushImage>true</pushImage>
+                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <imageTags>
+                        <!--docker的tag为项目版本号、latest-->
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <!--是否强制覆盖image-->
+                    <forceTags>true</forceTags>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+
+</project>

@@ -1,0 +1,67 @@
+version: '2'
+services:
+  ms-auth-server:
+    image: 192.168.43.217:5000/sky/skycloud-auth-server
+    ports:
+      - "8101:8101"
+    environment:
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://192.168.43.217:8888
+      - TZ=Asia/Shanghai
+    networks:
+      - front-tier
+      - back-tier
+
+  ms-user:
+    image: 192.168.43.217:5000/sky/skycloud-user
+    ports:
+      - "8102:8102"
+    environment:
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://192.168.43.217:8888
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      - back-tier
+
+  ms-upload:
+    image: 192.168.43.217:5000/sky/skycloud-upload
+    ports:
+      - "8103:8103"
+    environment:
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+      - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://192.168.43.217:8888
+      - TZ=Asia/Shanghai
+    networks:
+      - front-tier
+      - back-tier
+
+   ms-permission:
+      image: 192.168.43.217:5000/sky/skycloud-permission
+      ports:
+        - "8104:8104"
+      environment:
+        - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+        - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://192.168.43.217:8888
+        - TZ=Asia/Shanghai
+      networks:
+        - front-tier
+        - back-tier
+
+    ms-getway:
+          image: 192.168.43.217:5000/sky/skycloud-getway
+          ports:
+            - "8105:8105"
+          environment:
+            - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+            - BOOT_ARGS=-DCONFIG_SERVICE_URL=http://192.168.43.217:8888
+            - TZ=Asia/Shanghai
+          networks:
+            - front-tier
+            - back-tier
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge

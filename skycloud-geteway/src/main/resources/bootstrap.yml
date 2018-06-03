@@ -1,0 +1,64 @@
+server:
+  port: 8105
+
+spring:
+  application:
+    name: geteway
+
+  cloud:
+      config:
+        uri: ${config_service_uri:http://59.110.63.236:8888/config}
+        name: geteway
+        profile: ${config_profile:default}
+
+
+zuul:
+  ignored-services: "*"
+  sensitive-headers:
+  prefix: /api #为zuul设置一个公共的前缀
+#  ratelimit: # 网关限流
+#    key-prefix: gate_rate
+#    enabled: true
+#    repository: REDIS #REDIS, JPA, IN_MEMORY
+#    behind-proxy: true
+#    default-policy: #optional - will apply unless specific policy exists
+#      limit: 200
+#      refresh-interval: 60 #default value (in seconds)
+#      type: #optional
+#        - user
+#        - origin
+#        - url
+  routes:
+    back:
+      path: /admin/**
+      serviceId: manager
+
+    auth:
+      path: /auth/**
+      serviceId: auth
+
+    user:
+      path: /user/**
+      serviceId: user
+
+    upload:
+      path: /upload/**
+      serviceId: upload
+
+gate:
+  ignore:
+    startWith: /static,/auth/jwt
+
+
+#负载均衡
+ribbon:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+
+auth:
+  client:
+    id: getway
+    secret: 123456
