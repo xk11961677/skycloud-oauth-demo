@@ -1,0 +1,63 @@
+server:
+  port: 8104
+
+spring:
+  application:
+    name: admin
+  cloud:
+    config:
+      uri: ${config_service_uri:http://59.110.63.236:8888/config}
+      name: admin
+      profile: ${config_profile:default}
+
+  zipkin:
+      base-url: ${zipkin_service_uri:http://localhost:9411}
+
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://59.110.63.236:3308/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: woyourenwu123
+      druid:
+#          second:
+#              driver-class-name: com.mysql.cj.jdbc.Driver
+#              url: jdbc:mysql://59.110.63.236:3308/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+#              username: cloud
+#              password: cloud
+          initial-size: 5
+          max-active: 20
+          min-idle: 5
+          max-wait: 60000
+          pool-prepared-statements: true
+          max-pool-prepared-statement-per-connection-size: 20
+          max-open-prepared-statements: 20
+          validation-query: select 1 from dual
+          validation-query-timeout: 3000
+          test-on-borrow: true
+          test-on-return: true
+          test-while-idle: true
+          time-between-eviction-runs-millis: 30000
+          min-evictable-idle-time-millis: 30000
+          max-evictable-idle-time-millis: 30000
+
+
+security:
+    oauth2:
+      resource:
+        filter-order: 3
+        user-info-uri: http://localhost:8106/authentication/user
+
+skycloud:
+  oauth2:
+#    jwtSigningKey: skycloud
+    client:
+      id: admin
+      accessTokenUrl: http://localhost:8106/oauth/token
+      clientId: admin
+      clientSecret: admin
+      clientAuthenticationScheme: header
+#    client:
+#      client-id: user
+#      client-secret: 123456
+#      access-token-uri: http://localhost:8106/oauth/token
+#      user-authorization-uri: http://localhost:8106/oauth/authorize

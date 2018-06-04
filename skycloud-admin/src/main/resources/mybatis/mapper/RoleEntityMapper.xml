@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 功能模块:  -->
+<mapper namespace="RoleEntityMapper" >
+
+	<!--通用表字段列表-->
+	<resultMap id="BaseResultMap" type="com.skycloud.admin.entity.RoleEntity">
+		<result column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="CODE" property="code" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--通用表字段列表-->
+    
+	<!--user customize code start-->
+
+	<!--user customize code end  -->
+    
+	<!--通用查询条件组装-->
+	<sql id="whereContation">
+			<if test="id != null">
+				AND  ID=#{id,jdbcType=INTEGER}  
+			</if>
+			<if test="name != null">
+				AND  NAME=#{name,jdbcType=VARCHAR}  
+			</if>
+			<if test="code != null">
+				AND  CODE=#{code,jdbcType=VARCHAR}  
+			</if>
+	</sql>
+	
+	<!--查询字段列表拼装-->
+	<sql id="baseColumnList">
+			 ID		 
+			,NAME		 
+			,CODE		 
+	</sql>
+	
+	<!--
+	方法名称: insert
+	调用路径: RoleEntityMapper.insert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="insert" parameterType="com.skycloud.admin.entity.RoleEntity" >
+	 	INSERT  INTO  ROLE
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					ID,
+					</if>
+					<if test="name != null">
+					NAME,
+					</if>
+					<if test="code != null">
+					CODE,
+					</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					 #{id,jdbcType=INTEGER},
+					</if>
+					<if test="name != null">
+					 #{name,jdbcType=VARCHAR},
+					</if>
+					<if test="code != null">
+					 #{code,jdbcType=VARCHAR},
+					</if>
+			</trim>
+	</insert>
+	
+	<!--
+	方法名称: update
+	调用路径: RoleEntityMapper.update
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="update" parameterType="com.skycloud.admin.entity.RoleEntity" >
+		UPDATE   ROLE  	 
+	  	<set> 
+				<if test="name != null">
+			 		NAME = #{name,jdbcType=VARCHAR},
+			 	</if>
+				<if test="code != null">
+			 		CODE = #{code,jdbcType=VARCHAR},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: updateBak
+	调用路径: RoleEntityMapper.updateBak
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="updateBak" parameterType="com.skycloud.admin.entity.RoleEntity" >
+		UPDATE   ROLE  	 
+	  	<set> 
+			 		NAME = #{name,jdbcType=VARCHAR},
+			 		CODE = #{code,jdbcType=VARCHAR},
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: deleteByPriKey
+	调用路径:RoleEntityMapper.deleteByPriKey
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="deleteByPriKey" parameterType="com.skycloud.admin.entity.RoleEntity">
+		DELETE 	FROM ROLE 	 
+		WHERE 
+			ID = #{id,jdbcType=INTEGER}		 
+	</delete>
+	
+	<!--
+	方法名称: findByPriKey
+	调用路径: RoleEntityMapper.findByPriKey
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="findByPriKey" parameterType="com.skycloud.admin.entity.RoleEntity" resultType="com.skycloud.admin.entity.RoleEntity">
+		SELECT   
+		   <include refid="baseColumnList"/>
+		FROM   ROLE         
+		WHERE
+				ID = #{id,jdbcType=INTEGER}		 
+	</select>
+	
+	<!--
+	方法名称: getPagenationList
+	调用路径: RoleEntityMapper.getPagenationList
+	开发信息: 
+	处理信息: 分页查询记录
+	-->
+	<select id="getPagenationList" parameterType="com.skycloud.admin.entity.RoleEntity" resultType="com.skycloud.admin.entity.RoleEntity">
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationPrefix"/>
+		SELECT   
+	 		<include refid="baseColumnList"/>
+		FROM   ROLE          
+		WHERE 1=1
+		 	<include refid="whereContation"/>
+		 	<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		 	</if>
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationSuffix"/>
+	</select>
+	
+	<!--
+	方法名称: getPagenationList-count
+	调用路径: RoleEntityMapper.getPagenationList-count
+	开发信息: 
+	处理信息: 查询记录数
+	-->
+	<select id="getPagenationList-count" parameterType="com.skycloud.admin.entity.RoleEntity" resultType="int">
+		SELECT count(1)  FROM  ROLE     
+		 WHERE 1=1
+		<include refid="whereContation"/>
+	</select>
+	
+	<!--
+	方法名称: getList
+	调用路径: RoleEntityMapper.getList
+	开发信息: 
+	处理信息: 根据条件查询记录
+	-->
+	<select id="getList" parameterType="com.skycloud.admin.entity.RoleEntity" resultType="com.skycloud.admin.entity.RoleEntity">
+	   SELECT   
+	   		<include refid="baseColumnList"/>
+	   FROM   ROLE           
+	   WHERE 1=1
+		<include refid="whereContation"/>
+		<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		</if>
+		limit 0,100
+	</select>
+	
+	
+	<!--
+	方法名称: batchInsert
+	调用路径: RoleEntityMapper.batchInsert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="batchInsert" parameterType="java.util.List" >
+	 	INSERT  INTO  ROLE
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					ID,
+					NAME,
+					CODE,
+			</trim>
+			values
+			<foreach collection="list" item="entity" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+					 #{entity.id,jdbcType=INTEGER},
+					 #{entity.name,jdbcType=VARCHAR},
+					 #{entity.code,jdbcType=VARCHAR},
+			</trim>
+			</foreach>
+	</insert>
+	<!--
+	方法名称: batchUpdate
+	调用路径: RoleEntityMapper.batchUpdate
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="batchUpdate" parameterType="java.util.List" >
+ 		<foreach collection="list" item="entity" separator=",">
+		UPDATE   ROLE  	 
+	  	<set> 
+				<if test="name != null">
+			 		NAME = #{entity.name,jdbcType=VARCHAR},
+			 	</if>
+				<if test="code != null">
+			 		CODE = #{entity.code,jdbcType=VARCHAR},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+		</foreach>
+	</update>
+</mapper>

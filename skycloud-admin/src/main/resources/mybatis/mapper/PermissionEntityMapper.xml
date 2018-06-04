@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 功能模块:  -->
+<mapper namespace="PermissionEntityMapper" >
+
+	<!--通用表字段列表-->
+	<resultMap id="BaseResultMap" type="com.skycloud.admin.entity.PermissionEntity">
+		<result column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="CODE" property="code" jdbcType="VARCHAR"/>
+		<result column="ICON" property="icon" jdbcType="VARCHAR"/>
+		<result column="TYPE" property="type" jdbcType="VARCHAR"/>
+		<result column="URL" property="url" jdbcType="VARCHAR"/>
+		<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR"/>
+		<result column="LEAF" property="leaf" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--通用表字段列表-->
+    
+	<!--user customize code start-->
+
+	<!--user customize code end  -->
+    
+	<!--通用查询条件组装-->
+	<sql id="whereContation">
+			<if test="id != null">
+				AND  ID=#{id,jdbcType=INTEGER}  
+			</if>
+			<if test="name != null">
+				AND  NAME=#{name,jdbcType=VARCHAR}  
+			</if>
+			<if test="code != null">
+				AND  CODE=#{code,jdbcType=VARCHAR}  
+			</if>
+			<if test="icon != null">
+				AND  ICON=#{icon,jdbcType=VARCHAR}  
+			</if>
+			<if test="type != null">
+				AND  TYPE=#{type,jdbcType=VARCHAR}  
+			</if>
+			<if test="url != null">
+				AND  URL=#{url,jdbcType=VARCHAR}  
+			</if>
+			<if test="parentId != null">
+				AND  PARENT_ID=#{parentId,jdbcType=VARCHAR}  
+			</if>
+			<if test="leaf != null">
+				AND  LEAF=#{leaf,jdbcType=INTEGER}  
+			</if>
+	</sql>
+	
+	<!--查询字段列表拼装-->
+	<sql id="baseColumnList">
+			 ID		 
+			,NAME		 
+			,CODE		 
+			,ICON		 
+			,TYPE		 
+			,URL		 
+			,PARENT_ID		 
+			,LEAF		 
+	</sql>
+	
+	<!--
+	方法名称: insert
+	调用路径: PermissionEntityMapper.insert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="insert" parameterType="com.skycloud.admin.entity.PermissionEntity" >
+	 	INSERT  INTO  PERMISSION
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					ID,
+					</if>
+					<if test="name != null">
+					NAME,
+					</if>
+					<if test="code != null">
+					CODE,
+					</if>
+					<if test="icon != null">
+					ICON,
+					</if>
+					<if test="type != null">
+					TYPE,
+					</if>
+					<if test="url != null">
+					URL,
+					</if>
+					<if test="parentId != null">
+					PARENT_ID,
+					</if>
+					<if test="leaf != null">
+					LEAF,
+					</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					 #{id,jdbcType=INTEGER},
+					</if>
+					<if test="name != null">
+					 #{name,jdbcType=VARCHAR},
+					</if>
+					<if test="code != null">
+					 #{code,jdbcType=VARCHAR},
+					</if>
+					<if test="icon != null">
+					 #{icon,jdbcType=VARCHAR},
+					</if>
+					<if test="type != null">
+					 #{type,jdbcType=VARCHAR},
+					</if>
+					<if test="url != null">
+					 #{url,jdbcType=VARCHAR},
+					</if>
+					<if test="parentId != null">
+					 #{parentId,jdbcType=VARCHAR},
+					</if>
+					<if test="leaf != null">
+					 #{leaf,jdbcType=INTEGER},
+					</if>
+			</trim>
+	</insert>
+	
+	<!--
+	方法名称: update
+	调用路径: PermissionEntityMapper.update
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="update" parameterType="com.skycloud.admin.entity.PermissionEntity" >
+		UPDATE   PERMISSION  	 
+	  	<set> 
+				<if test="name != null">
+			 		NAME = #{name,jdbcType=VARCHAR},
+			 	</if>
+				<if test="code != null">
+			 		CODE = #{code,jdbcType=VARCHAR},
+			 	</if>
+				<if test="icon != null">
+			 		ICON = #{icon,jdbcType=VARCHAR},
+			 	</if>
+				<if test="type != null">
+			 		TYPE = #{type,jdbcType=VARCHAR},
+			 	</if>
+				<if test="url != null">
+			 		URL = #{url,jdbcType=VARCHAR},
+			 	</if>
+				<if test="parentId != null">
+			 		PARENT_ID = #{parentId,jdbcType=VARCHAR},
+			 	</if>
+				<if test="leaf != null">
+			 		LEAF = #{leaf,jdbcType=INTEGER},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: updateBak
+	调用路径: PermissionEntityMapper.updateBak
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="updateBak" parameterType="com.skycloud.admin.entity.PermissionEntity" >
+		UPDATE   PERMISSION  	 
+	  	<set> 
+			 		NAME = #{name,jdbcType=VARCHAR},
+			 		CODE = #{code,jdbcType=VARCHAR},
+			 		ICON = #{icon,jdbcType=VARCHAR},
+			 		TYPE = #{type,jdbcType=VARCHAR},
+			 		URL = #{url,jdbcType=VARCHAR},
+			 		PARENT_ID = #{parentId,jdbcType=VARCHAR},
+			 		LEAF = #{leaf,jdbcType=INTEGER},
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: deleteByPriKey
+	调用路径:PermissionEntityMapper.deleteByPriKey
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="deleteByPriKey" parameterType="com.skycloud.admin.entity.PermissionEntity">
+		DELETE 	FROM PERMISSION 	 
+		WHERE 
+			ID = #{id,jdbcType=INTEGER}		 
+	</delete>
+	
+	<!--
+	方法名称: findByPriKey
+	调用路径: PermissionEntityMapper.findByPriKey
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="findByPriKey" parameterType="com.skycloud.admin.entity.PermissionEntity" resultType="com.skycloud.admin.entity.PermissionEntity">
+		SELECT   
+		   <include refid="baseColumnList"/>
+		FROM   PERMISSION         
+		WHERE
+				ID = #{id,jdbcType=INTEGER}		 
+	</select>
+	
+	<!--
+	方法名称: getPagenationList
+	调用路径: PermissionEntityMapper.getPagenationList
+	开发信息: 
+	处理信息: 分页查询记录
+	-->
+	<select id="getPagenationList" parameterType="com.skycloud.admin.entity.PermissionEntity" resultType="com.skycloud.admin.entity.PermissionEntity">
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationPrefix"/>
+		SELECT   
+	 		<include refid="baseColumnList"/>
+		FROM   PERMISSION          
+		WHERE 1=1
+		 	<include refid="whereContation"/>
+		 	<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		 	</if>
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationSuffix"/>
+	</select>
+	
+	<!--
+	方法名称: getPagenationList-count
+	调用路径: PermissionEntityMapper.getPagenationList-count
+	开发信息: 
+	处理信息: 查询记录数
+	-->
+	<select id="getPagenationList-count" parameterType="com.skycloud.admin.entity.PermissionEntity" resultType="int">
+		SELECT count(1)  FROM  PERMISSION     
+		 WHERE 1=1
+		<include refid="whereContation"/>
+	</select>
+	
+	<!--
+	方法名称: getList
+	调用路径: PermissionEntityMapper.getList
+	开发信息: 
+	处理信息: 根据条件查询记录
+	-->
+	<select id="getList" parameterType="com.skycloud.admin.entity.PermissionEntity" resultType="com.skycloud.admin.entity.PermissionEntity">
+	   SELECT   
+	   		<include refid="baseColumnList"/>
+	   FROM   PERMISSION           
+	   WHERE 1=1
+		<include refid="whereContation"/>
+		<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		</if>
+		limit 0,100
+	</select>
+	
+	
+	<!--
+	方法名称: batchInsert
+	调用路径: PermissionEntityMapper.batchInsert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="batchInsert" parameterType="java.util.List" >
+	 	INSERT  INTO  PERMISSION
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					ID,
+					NAME,
+					CODE,
+					ICON,
+					TYPE,
+					URL,
+					PARENT_ID,
+					LEAF,
+			</trim>
+			values
+			<foreach collection="list" item="entity" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+					 #{entity.id,jdbcType=INTEGER},
+					 #{entity.name,jdbcType=VARCHAR},
+					 #{entity.code,jdbcType=VARCHAR},
+					 #{entity.icon,jdbcType=VARCHAR},
+					 #{entity.type,jdbcType=VARCHAR},
+					 #{entity.url,jdbcType=VARCHAR},
+					 #{entity.parentId,jdbcType=VARCHAR},
+					 #{entity.leaf,jdbcType=INTEGER},
+			</trim>
+			</foreach>
+	</insert>
+	<!--
+	方法名称: batchUpdate
+	调用路径: PermissionEntityMapper.batchUpdate
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="batchUpdate" parameterType="java.util.List" >
+ 		<foreach collection="list" item="entity" separator=",">
+		UPDATE   PERMISSION  	 
+	  	<set> 
+				<if test="name != null">
+			 		NAME = #{entity.name,jdbcType=VARCHAR},
+			 	</if>
+				<if test="code != null">
+			 		CODE = #{entity.code,jdbcType=VARCHAR},
+			 	</if>
+				<if test="icon != null">
+			 		ICON = #{entity.icon,jdbcType=VARCHAR},
+			 	</if>
+				<if test="type != null">
+			 		TYPE = #{entity.type,jdbcType=VARCHAR},
+			 	</if>
+				<if test="url != null">
+			 		URL = #{entity.url,jdbcType=VARCHAR},
+			 	</if>
+				<if test="parentId != null">
+			 		PARENT_ID = #{entity.parentId,jdbcType=VARCHAR},
+			 	</if>
+				<if test="leaf != null">
+			 		LEAF = #{entity.leaf,jdbcType=INTEGER},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+		</foreach>
+	</update>
+</mapper>

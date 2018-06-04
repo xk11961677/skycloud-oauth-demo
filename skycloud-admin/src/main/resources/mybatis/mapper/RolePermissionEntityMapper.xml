@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 功能模块:  -->
+<mapper namespace="RolePermissionEntityMapper" >
+
+	<!--通用表字段列表-->
+	<resultMap id="BaseResultMap" type="com.skycloud.admin.entity.RolePermissionEntity">
+		<result column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="ROLE_ID" property="roleId" jdbcType="INTEGER"/>
+		<result column="PERMISSION_ID" property="permissionId" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--通用表字段列表-->
+    
+	<!--user customize code start-->
+
+	<!--user customize code end  -->
+    
+	<!--通用查询条件组装-->
+	<sql id="whereContation">
+			<if test="id != null">
+				AND  ID=#{id,jdbcType=INTEGER}  
+			</if>
+			<if test="roleId != null">
+				AND  ROLE_ID=#{roleId,jdbcType=INTEGER}  
+			</if>
+			<if test="permissionId != null">
+				AND  PERMISSION_ID=#{permissionId,jdbcType=INTEGER}  
+			</if>
+	</sql>
+	
+	<!--查询字段列表拼装-->
+	<sql id="baseColumnList">
+			 ID		 
+			,ROLE_ID		 
+			,PERMISSION_ID		 
+	</sql>
+	
+	<!--
+	方法名称: insert
+	调用路径: RolePermissionEntityMapper.insert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="insert" parameterType="com.skycloud.admin.entity.RolePermissionEntity" >
+	 	INSERT  INTO  ROLE_PERMISSION
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					ID,
+					</if>
+					<if test="roleId != null">
+					ROLE_ID,
+					</if>
+					<if test="permissionId != null">
+					PERMISSION_ID,
+					</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="id != null">
+					 #{id,jdbcType=INTEGER},
+					</if>
+					<if test="roleId != null">
+					 #{roleId,jdbcType=INTEGER},
+					</if>
+					<if test="permissionId != null">
+					 #{permissionId,jdbcType=INTEGER},
+					</if>
+			</trim>
+	</insert>
+	
+	<!--
+	方法名称: update
+	调用路径: RolePermissionEntityMapper.update
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="update" parameterType="com.skycloud.admin.entity.RolePermissionEntity" >
+		UPDATE   ROLE_PERMISSION  	 
+	  	<set> 
+				<if test="roleId != null">
+			 		ROLE_ID = #{roleId,jdbcType=INTEGER},
+			 	</if>
+				<if test="permissionId != null">
+			 		PERMISSION_ID = #{permissionId,jdbcType=INTEGER},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: updateBak
+	调用路径: RolePermissionEntityMapper.updateBak
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="updateBak" parameterType="com.skycloud.admin.entity.RolePermissionEntity" >
+		UPDATE   ROLE_PERMISSION  	 
+	  	<set> 
+			 		ROLE_ID = #{roleId,jdbcType=INTEGER},
+			 		PERMISSION_ID = #{permissionId,jdbcType=INTEGER},
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+	</update>
+	
+	<!--
+	方法名称: deleteByPriKey
+	调用路径:RolePermissionEntityMapper.deleteByPriKey
+	开发信息: 
+	处理信息: 删除记录
+	-->
+	<delete id="deleteByPriKey" parameterType="com.skycloud.admin.entity.RolePermissionEntity">
+		DELETE 	FROM ROLE_PERMISSION 	 
+		WHERE 
+			ID = #{id,jdbcType=INTEGER}		 
+	</delete>
+	
+	<!--
+	方法名称: findByPriKey
+	调用路径: RolePermissionEntityMapper.findByPriKey
+	开发信息: 
+	处理信息: 根据主键查询记录
+	-->
+	<select id="findByPriKey" parameterType="com.skycloud.admin.entity.RolePermissionEntity" resultType="com.skycloud.admin.entity.RolePermissionEntity">
+		SELECT   
+		   <include refid="baseColumnList"/>
+		FROM   ROLE_PERMISSION         
+		WHERE
+				ID = #{id,jdbcType=INTEGER}		 
+	</select>
+	
+	<!--
+	方法名称: getPagenationList
+	调用路径: RolePermissionEntityMapper.getPagenationList
+	开发信息: 
+	处理信息: 分页查询记录
+	-->
+	<select id="getPagenationList" parameterType="com.skycloud.admin.entity.RolePermissionEntity" resultType="com.skycloud.admin.entity.RolePermissionEntity">
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationPrefix"/>
+		SELECT   
+	 		<include refid="baseColumnList"/>
+		FROM   ROLE_PERMISSION          
+		WHERE 1=1
+		 	<include refid="whereContation"/>
+		 	<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		 	</if>
+		<!-- 分页条 -->
+		<include refid="CommonEntity.paginationSuffix"/>
+	</select>
+	
+	<!--
+	方法名称: getPagenationList-count
+	调用路径: RolePermissionEntityMapper.getPagenationList-count
+	开发信息: 
+	处理信息: 查询记录数
+	-->
+	<select id="getPagenationList-count" parameterType="com.skycloud.admin.entity.RolePermissionEntity" resultType="int">
+		SELECT count(1)  FROM  ROLE_PERMISSION     
+		 WHERE 1=1
+		<include refid="whereContation"/>
+	</select>
+	
+	<!--
+	方法名称: getList
+	调用路径: RolePermissionEntityMapper.getList
+	开发信息: 
+	处理信息: 根据条件查询记录
+	-->
+	<select id="getList" parameterType="com.skycloud.admin.entity.RolePermissionEntity" resultType="com.skycloud.admin.entity.RolePermissionEntity">
+	   SELECT   
+	   		<include refid="baseColumnList"/>
+	   FROM   ROLE_PERMISSION           
+	   WHERE 1=1
+		<include refid="whereContation"/>
+		<if test="columnSort != null">
+		 	ORDER BY ${columnSort}
+		</if>
+		limit 0,100
+	</select>
+	
+	
+	<!--
+	方法名称: batchInsert
+	调用路径: RolePermissionEntityMapper.batchInsert
+	开发信息: 
+	处理信息: 保存记录
+	-->
+ 	<insert id="batchInsert" parameterType="java.util.List" >
+	 	INSERT  INTO  ROLE_PERMISSION
+	 		<trim prefix="(" suffix=")" suffixOverrides=",">
+					ID,
+					ROLE_ID,
+					PERMISSION_ID,
+			</trim>
+			values
+			<foreach collection="list" item="entity" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+					 #{entity.id,jdbcType=INTEGER},
+					 #{entity.roleId,jdbcType=INTEGER},
+					 #{entity.permissionId,jdbcType=INTEGER},
+			</trim>
+			</foreach>
+	</insert>
+	<!--
+	方法名称: batchUpdate
+	调用路径: RolePermissionEntityMapper.batchUpdate
+	开发信息: 
+	处理信息: 修改记录
+	-->
+ 	<update id="batchUpdate" parameterType="java.util.List" >
+ 		<foreach collection="list" item="entity" separator=",">
+		UPDATE   ROLE_PERMISSION  	 
+	  	<set> 
+				<if test="roleId != null">
+			 		ROLE_ID = #{entity.roleId,jdbcType=INTEGER},
+			 	</if>
+				<if test="permissionId != null">
+			 		PERMISSION_ID = #{entity.permissionId,jdbcType=INTEGER},
+			 	</if>
+		</set>
+		WHERE  
+			ID = #{id,jdbcType=INTEGER}		 
+		</foreach>
+	</update>
+</mapper>
