@@ -31,7 +31,7 @@ zuul:
   routes:
     back:
       path: /admin/**
-      serviceId: manager
+      serviceId: admin
 
     auth:
       path: /auth/**
@@ -41,24 +41,16 @@ zuul:
       path: /user/**
       serviceId: user
 
-    upload:
-      path: /upload/**
-      serviceId: upload
-
 gate:
   ignore:
-    startWith: /static,/auth/jwt
+    startWith: /static
 
 
 #负载均衡
-ribbon:
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
+#ribbon:
+#  httpclient:
+#    enabled: false
+#  okhttp:
+#    enabled: true
 
 
-auth:
-  client:
-    id: getway
-    secret: 123456

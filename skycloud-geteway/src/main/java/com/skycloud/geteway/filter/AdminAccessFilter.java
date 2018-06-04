@@ -44,11 +44,12 @@ public class AdminAccessFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         final String requestUri = request.getRequestURI().substring(zuulPrefix.length());
-        final String method = request.getMethod();
         // 不进行拦截的地址
         if (isStartWith(requestUri)) {
             return null;
         }
+        String access_token = request.getParameter("access_token");
+        ctx.addZuulRequestHeader("access_token",access_token);
         return null;
     }
 

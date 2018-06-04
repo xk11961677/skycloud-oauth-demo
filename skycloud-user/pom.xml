@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.skycloud</groupId>
-        <artifactId>skycloud-admin</artifactId>
+        <artifactId>skycloud-oauth-demo</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
@@ -76,15 +76,21 @@
             <artifactId>skycloud-mybaits</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.skycloud</groupId>
-            <artifactId>skycloud-auth-client</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.skycloud</groupId>
             <artifactId>skycloud-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+        </dependency>
 
     </dependencies>
 

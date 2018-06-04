@@ -1,4 +1,4 @@
-package com.skycloud.api.client.upload;
+package com.skycloud.api.client.admin;
 
 import com.skycloud.common.base.ResponseData;
 import lombok.Data;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author sky
  */
-@FeignClient(name = "upload", fallback = UploadApi.UploadApiFallback.class)
-public interface UploadApi {
+@FeignClient(name = "skycloud-admin", fallback = PermissionApi.PermissionApiFallback.class)
+public interface PermissionApi {
 
 
-	@RequestMapping(value="/upload/test/test",method=RequestMethod.POST)
+	@RequestMapping(value="/admin/permission/getMenu",method=RequestMethod.POST)
 	@ResponseBody
 	ResponseData<TestDTO> send(@RequestBody TestDTO testDTO);
 
 	/**
 	 * 断路器
-	 * 
+	 *
 	 *
 	 */
 	@Component
-	class UploadApiFallback  implements UploadApi {
+	class PermissionApiFallback  implements PermissionApi {
 
 		@Override
 		public ResponseData send(@RequestBody TestDTO testDTO) {

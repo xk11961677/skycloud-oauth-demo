@@ -17,12 +17,11 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
     @Override
     public ClientDetailsDO findByClientId(String clientId) {
         ClientDetailsDO clientDetailsDO = new ClientDetailsDO();
-        clientDetailsDO.setClientId("webapp");
-        clientDetailsDO.setScope("select,write");
-        clientDetailsDO.setClientSecret("webapp");
-        clientDetailsDO.setAccessTokenValiditySeconds(3600);
-        clientDetailsDO.setRefreshTokenValiditySeconds(3600);
-        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+        if("webapp".equals(clientId)) {
+            build(clientDetailsDO);
+        }else {
+            buildAdmin(clientDetailsDO);
+        }
         return clientDetailsDO;
     }
 
@@ -30,5 +29,25 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
     public List<ClientDetailsDO> findAll(ClientDetailsDO clientDetails) {
         List<ClientDetailsDO> clientDetailsDOs = new ArrayList();
         return clientDetailsDOs;
+    }
+
+    private void build(ClientDetailsDO clientDetailsDO) {
+        clientDetailsDO.setClientId("webapp");
+        clientDetailsDO.setScope("all");
+        clientDetailsDO.setClientSecret("webapp");
+        clientDetailsDO.setAccessTokenValiditySeconds(3600);
+        clientDetailsDO.setRefreshTokenValiditySeconds(3600);
+        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+    }
+
+    private void buildAdmin(ClientDetailsDO clientDetailsDO) {
+        System.out.println("========================================");
+        clientDetailsDO.setResourceIds("admin");
+        clientDetailsDO.setClientId("admin");
+        clientDetailsDO.setScope("all");
+        clientDetailsDO.setClientSecret("admin");
+        clientDetailsDO.setAccessTokenValiditySeconds(3600);
+        clientDetailsDO.setRefreshTokenValiditySeconds(3600);
+        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
     }
 }

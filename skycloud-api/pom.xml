@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.skycloud</groupId>
-        <artifactId>skycloud-admin</artifactId>
+        <artifactId>skycloud-oauth-demo</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 

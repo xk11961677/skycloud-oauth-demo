@@ -1,4 +1,4 @@
-package com.skycloud.auth.configuration;
+package com.skycloud.admin.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,10 +22,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .exceptionHandling()
             .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
             .and()
-            .formLogin().loginPage("/authentication/require")
-            .loginProcessingUrl("/authentication/form")
-            .and()
-            .authorizeRequests().antMatchers("/login", "/test").permitAll()
+            .authorizeRequests().antMatchers().permitAll()
             .anyRequest().authenticated()
             .and()
             .httpBasic();
