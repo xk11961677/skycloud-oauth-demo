@@ -16,12 +16,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 public class UserApplication {
 
-    @LoadBalanced
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     /**
      * 入口
      *

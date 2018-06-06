@@ -44,7 +44,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 
     private void buildAdmin(ClientDetailsDO clientDetailsDO) {
         System.out.println("========================================admin");
-        clientDetailsDO.setResourceIds("admin");
+//        clientDetailsDO.setResourceIds("admin");
         clientDetailsDO.setClientId("123456");
         clientDetailsDO.setScope("all");
         clientDetailsDO.setClientSecret("admin");
@@ -56,7 +56,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 
     private void assembleUser(ClientDetailsDO clientDetailsDO) {
         System.out.println("========================================user");
-        clientDetailsDO.setResourceIds("user");
+//        clientDetailsDO.setResourceIds("user");
         clientDetailsDO.setClientId("123456");
         clientDetailsDO.setScope("all");
         clientDetailsDO.setClientSecret("user");

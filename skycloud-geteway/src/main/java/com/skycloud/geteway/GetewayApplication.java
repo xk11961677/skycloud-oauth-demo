@@ -18,12 +18,6 @@ import org.springframework.web.client.RestTemplate;
 public class GetewayApplication {
 
 
-    @LoadBalanced
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     /**
      * 入口
      *
