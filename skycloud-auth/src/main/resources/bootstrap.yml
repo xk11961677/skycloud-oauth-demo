@@ -16,8 +16,8 @@ spring:
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://59.110.63.236:3306/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: root
-      password: woyourenwu123
+      username: cloud
+      password: cloud
       druid:
 #          second:
 #              driver-class-name: com.mysql.cj.jdbc.Driver
@@ -41,16 +41,15 @@ spring:
           max-evictable-idle-time-millis: 30000
 
 
-#security:
-#    oauth2:
-#      resource:
-#        filter-order: 3
-#    client:
-#      client-id: webapp
-#      client-secret: webapp
-#      access-token-uri: http://localhost:8106/oauth/token
-#      user-authorization-uri: http://localhost:8106/oauth/authorize
 security:
-  oauth2:
-    resource:
-      filter-order: 3
+    oauth2:
+      client:
+        client-id: webapp
+        client-secret: webapp
+        access-token-uri: http://localhost:8106/oauth/token
+        user-authorization-uri: http://localhost:8106/oauth/authorize
+      resource:
+        filter-order: 3
+#        user-info-uri: http://localhost:8106/authentication/user
+#        prefer-token-info: false
+

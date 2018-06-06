@@ -41,6 +41,6 @@ public class OAuth2FeignRequestInterceptor implements RequestInterceptor {
 		log.info("============>>:{}"+token);
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
 
-		template.header(HttpHeaders.AUTHORIZATION, String.format("%s %s", BEARER_TOKEN_TYPE, details.getTokenValue()));
+		template.header(HttpHeaders.AUTHORIZATION, String.format("%s %s", BEARER_TOKEN_TYPE, token));
 	}
 }

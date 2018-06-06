@@ -16,6 +16,8 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
 
+import java.util.Arrays;
+
 /**
  * The class O auth 2 feign auto configuration.
  *
@@ -48,6 +50,7 @@ public class OAuth2FeignAutoConfiguration {
 		details.setAccessTokenUri(oauth2ClientProperties.getAccessTokenUrl());
 		details.setClientId(oauth2ClientProperties.getClientId());
 		details.setClientSecret(oauth2ClientProperties.getClientSecret());
+		details.setScope(Arrays.asList("all"));
 		details.setAuthenticationScheme(AuthenticationScheme.valueOf(oauth2ClientProperties.getClientAuthenticationScheme()));
 		return details;
 	}
