@@ -53,4 +53,16 @@ gate:
 #  okhttp:
 #    enabled: true
 
-
+security:
+  oauth2:
+    client:
+      clientId: gateway
+      clientSecret: 123456
+      access-token-uri: http://localhost:8105/api/auth/oauth/token
+      user-authorization-uri: http://localhost:8105/api/auth/oauth/authorize
+      scope: all
+    resource:
+      user-info-uri: http://localhost:8105/api/auth/authentication/user
+      prefer-token-info: false
+#      jwt:
+#        key-uri: http://paascloud-provider-uac:8000/oauth/token_key

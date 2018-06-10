@@ -1,6 +1,7 @@
 package com.skycloud.geteway;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringCloudApplication
 @EnableZuulProxy
+@EnableOAuth2Sso
 public class GetewayApplication {
 
 

@@ -4,6 +4,7 @@ import com.skycloud.auth.model.domain.ClientDetailsDO;
 import com.skycloud.auth.service.CustomClientDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
@@ -29,13 +30,28 @@ public class SecurityClientDetailsServiceImpl implements ClientDetailsService {
         String redirectUris = clientDetailsDO.getWebServerRedirectUri();
         Integer refreshTokenValiditySeconds = clientDetailsDO.getRefreshTokenValiditySeconds();
         Integer accessTokenValiditySeconds = clientDetailsDO.getAccessTokenValiditySeconds();
-        String clientSecret=clientDetailsDO.getClientSecret();
-        log.info("clientDetailsDO  info : "+ clientDetailsDO.toString());
-        BaseClientDetails baseClientDetails = new BaseClientDetails(clientId,resourceIds,scopes,grantTypes,authorities,redirectUris);
-        baseClientDetails.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
-        baseClientDetails.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
-        baseClientDetails.setClientSecret(clientSecret);
-        baseClientDetails.setClientId(clientId);
-        return baseClientDetails;
+        String clientSecret = clientDetailsDO.getClientSecret();
+        log.info("clientDetailsDO  info : " + clientDetailsDO.toString());
+//        BaseClientDetails baseClientDetails = new BaseClientDetails(clientId,resourceIds,scopes,grantTypes,authorities,redirectUris);
+//        baseClientDetails.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
+//        baseClientDetails.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
+//        baseClientDetails.setClientSecret(clientSecret);
+//        baseClientDetails.setClientId(clientId);
+
+        InMemoryClientDetailsServiceBuilder builder = new InMemoryClientDetailsServiceBuilder();
+        builder.withClient(clientId)
+                .secret(clientSecret)
+                .authorizedGrantTypes("refresh_token", "password", "client_credentials")
+                .accessTokenValiditySeconds(accessTokenValiditySeconds)
+                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
+                .scopes("all");
+        ClientDetailsService build = null;
+        try {
+            build = builder.build();
+        } catch (Exception e) {
+            log.error("init={}", e.getMessage(), e);
+        }
+
+        return build.loadClientByClientId(clientId);
     }
 }

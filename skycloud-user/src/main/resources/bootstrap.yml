@@ -51,8 +51,8 @@ spring:
 #    client:
 #      client-id: user
 #      client-secret: 123456
-      access-token-uri: http://localhost:8106/oauth/token
-      user-authorization-uri: http://localhost:8106/oauth/authorize
+#      access-token-uri: http://localhost:8106/oauth/token
+#      user-authorization-uri: http://localhost:8106/oauth/authorize
 
 
 security:
@@ -60,10 +60,11 @@ security:
     client:
       clientId: user
       clientSecret: 123456
-      access-token-uri: http://localhost:8106/oauth/token
-      user-authorization-uri: http://localhost:8106/oauth/authorize
+      access-token-uri: http://localhost:8105/api/auth/oauth/token
+      user-authorization-uri: http://localhost:8105/api/auth/oauth/authorize
+      scope: all
     resource:
-      user-info-uri: http://localhost:8106/authentication/user
+      user-info-uri: http://localhost:8105/api/auth/authentication/user
       prefer-token-info: false
 #      jwt:
 #        key-uri: http://paascloud-provider-uac:8000/oauth/token_key

@@ -25,6 +25,7 @@ public class PermissionController {
 
     @RequestMapping("getMenu")
     public ResponseData<String> getMenu() {
+        log.info("===========>>:{}getMenu");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         ResponseData<UserDTO> userDto = userApi.getUser("123", "123");
         if(StringUtils.isEmpty(userDto)) {

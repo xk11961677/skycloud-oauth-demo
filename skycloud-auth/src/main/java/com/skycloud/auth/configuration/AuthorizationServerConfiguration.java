@@ -32,7 +32,7 @@ import javax.annotation.Resource;
 @Slf4j
 public class AuthorizationServerConfiguration  extends AuthorizationServerConfigurerAdapter {
 
-    @Resource
+    @Autowired
     private AuthenticationManager authenticationManager;
 
 //    @Autowired
@@ -58,7 +58,7 @@ public class AuthorizationServerConfiguration  extends AuthorizationServerConfig
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager)
-                .reuseRefreshTokens(false)
+//                .reuseRefreshTokens(true)
                 .userDetailsService(userDetailsService())//若无，refresh_token会有UserDetailsService is required错误
                 //   .tokenStore(tokenStore());
                 .tokenStore(new InMemoryTokenStore());
@@ -67,7 +67,7 @@ public class AuthorizationServerConfiguration  extends AuthorizationServerConfig
     //对应于配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()");//.checkTokenAccess("isAuthenticated()");
     }
 
     //配置OAuth2的客户端相关信息

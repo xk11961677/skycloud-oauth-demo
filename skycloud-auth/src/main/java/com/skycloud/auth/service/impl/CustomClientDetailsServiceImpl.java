@@ -2,6 +2,7 @@ package com.skycloud.auth.service.impl;
 
 import com.skycloud.auth.model.domain.ClientDetailsDO;
 import com.skycloud.auth.service.CustomClientDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 
 @Service
+@Slf4j
 public class CustomClientDetailsServiceImpl implements CustomClientDetailsService {
 
 
@@ -21,8 +23,12 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
             build(clientDetailsDO);
         }else if("user".equals(clientId)) {
             assembleUser(clientDetailsDO);
-        }else {
+        }else if("gateway".equals(clientId)) {
+            assembleGetway(clientDetailsDO);
+        }else if("admin".equals(clientId)) {
             buildAdmin(clientDetailsDO);
+        }else {
+            log.info("client not found");
         }
         return clientDetailsDO;
     }
@@ -45,9 +51,9 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
     private void buildAdmin(ClientDetailsDO clientDetailsDO) {
         System.out.println("========================================admin");
 //        clientDetailsDO.setResourceIds("admin");
-        clientDetailsDO.setClientId("123456");
+        clientDetailsDO.setClientId("admin");
         clientDetailsDO.setScope("all");
-        clientDetailsDO.setClientSecret("admin");
+        clientDetailsDO.setClientSecret("123456");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
         clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
@@ -57,9 +63,21 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
     private void assembleUser(ClientDetailsDO clientDetailsDO) {
         System.out.println("========================================user");
 //        clientDetailsDO.setResourceIds("user");
-        clientDetailsDO.setClientId("123456");
+        clientDetailsDO.setClientId("user");
         clientDetailsDO.setScope("all");
-        clientDetailsDO.setClientSecret("user");
+        clientDetailsDO.setClientSecret("123456");
+        clientDetailsDO.setAccessTokenValiditySeconds(3600);
+        clientDetailsDO.setRefreshTokenValiditySeconds(3600);
+        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+    }
+
+
+    private void assembleGetway(ClientDetailsDO clientDetailsDO) {
+        System.out.println("========================================user");
+//        clientDetailsDO.setResourceIds("user");
+        clientDetailsDO.setClientId("gateway");
+        clientDetailsDO.setScope("all");
+        clientDetailsDO.setClientSecret("123456");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
         clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
