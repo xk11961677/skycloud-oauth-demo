@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,8 +52,11 @@ public class AdminAccessFilter extends ZuulFilter {
         }
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         log.info("========>>:{}"+header);
-        String access_token = request.getParameter("access_token");
-        ctx.addZuulRequestHeader("access_token",access_token);
+        if(StringUtils.isEmpty(header)) {
+            header = request.getParameter("access_token");
+        }
+//        ctx.addZuulRequestHeader("access_token",access_token);
+        ctx.addZuulRequestHeader(HttpHeaders.AUTHORIZATION,header);
         return null;
     }
 

@@ -63,7 +63,6 @@ public class AuthenticationController {
             userDO = new UserDO(1, ((Principal) principal).getName(), "123456", authorities, true);
             return userDO;
         }
-        userDO = new UserDO(1, Objects.toString(principal), "123456", authorities, true);
         return userDO;
 //        return authentication.getPrincipal();
     }
