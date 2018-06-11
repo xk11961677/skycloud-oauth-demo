@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * @date 2018年03月10日
@@ -33,6 +34,7 @@ public class AuthenticationController {
 
     /**
      * 认证页面
+     *
      * @return ModelAndView
      */
     @GetMapping("/require")
@@ -42,28 +44,26 @@ public class AuthenticationController {
 
     /**
      * 用户信息校验
-     * @param authentication 信息
+     *
      * @return 用户信息
      */
     @RequestMapping("/user")
-    public Object user(Authentication authentication) {
-        Object authenticationPrincipal = authentication.getPrincipal();
+    public UserDO user() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        UserDO userDO = null;
+        HashSet<SimpleGrantedAuthority> authorities = new HashSet<>();
         if (principal instanceof UserDetails) {
-            return authenticationPrincipal;
 //            return ((UserDetails) principal).getUsername();
 
+            userDO = new UserDO(1, "system", "123456", authorities, true);
+            return userDO;
         }
 
         if (principal instanceof Principal) {
-
-            return ((Principal) principal).getName();
-
+            userDO = new UserDO(1, ((Principal) principal).getName(), "123456", authorities, true);
+            return userDO;
         }
-        Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("findclient"));
-        UserDO userDO = new UserDO(1,"admin","123456",grantedAuthorities,true);
+        userDO = new UserDO(1, Objects.toString(principal), "123456", authorities, true);
         return userDO;
 //        return authentication.getPrincipal();
     }
@@ -71,7 +71,7 @@ public class AuthenticationController {
     /**
      * 清除Redis中 accesstoken refreshtoken
      *
-     * @param accesstoken  accesstoken
+     * @param accesstoken accesstoken
      * @return true/false
      */
     @PostMapping("/removeToken")
