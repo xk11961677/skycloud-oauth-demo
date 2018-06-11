@@ -45,7 +45,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
         clientDetailsDO.setClientSecret("webapp");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
-        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+        clientDetailsDO.setAuthorizedGrantTypes("password,client_credentials,refresh_token");
     }
 
     private void buildAdmin(ClientDetailsDO clientDetailsDO) {
@@ -56,7 +56,8 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
         clientDetailsDO.setClientSecret("123456");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
-        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+        //password,
+        clientDetailsDO.setAuthorizedGrantTypes("client_credentials,refresh_token");
     }
 
 
@@ -68,8 +69,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
         clientDetailsDO.setClientSecret("123456");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
-        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
-    }
+        clientDetailsDO.setAuthorizedGrantTypes("client_credentials,refresh_token");    }
 
 
     private void assembleGetway(ClientDetailsDO clientDetailsDO) {
@@ -80,6 +80,6 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
         clientDetailsDO.setClientSecret("123456");
         clientDetailsDO.setAccessTokenValiditySeconds(3600);
         clientDetailsDO.setRefreshTokenValiditySeconds(3600);
-        clientDetailsDO.setAuthorizedGrantTypes("password,authorization_code,client_credentials,implicit,refresh_token");
+        clientDetailsDO.setAuthorizedGrantTypes("client_credentials,refresh_token");
     }
 }

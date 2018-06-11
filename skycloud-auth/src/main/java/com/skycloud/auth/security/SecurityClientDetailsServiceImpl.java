@@ -41,7 +41,8 @@ public class SecurityClientDetailsServiceImpl implements ClientDetailsService {
         InMemoryClientDetailsServiceBuilder builder = new InMemoryClientDetailsServiceBuilder();
         builder.withClient(clientId)
                 .secret(clientSecret)
-                .authorizedGrantTypes("refresh_token", "password", "client_credentials")
+//                .authorizedGrantTypes("refresh_token", "password", "client_credentials")
+                .authorizedGrantTypes(clientDetailsDO.getAuthorizedGrantTypes().split(","))
                 .accessTokenValiditySeconds(accessTokenValiditySeconds)
                 .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
                 .scopes("all");

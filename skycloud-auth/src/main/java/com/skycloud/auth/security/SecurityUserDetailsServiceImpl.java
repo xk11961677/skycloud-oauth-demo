@@ -19,7 +19,6 @@ public class SecurityUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String lowcaseUsername = username.toLowerCase();
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("findclient"));
         UserDO userDO = new UserDO(1,"system","123456",grantedAuthorities,true);
         return userDO;
     }
