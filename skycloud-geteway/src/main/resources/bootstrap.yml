@@ -64,5 +64,5 @@ security:
     resource:
       user-info-uri: http://localhost:8106/authentication/user
       prefer-token-info: false
-#      jwt:
-#         key-uri: http://localhost:8106/oauth/token_key
+      jwt:
+         key-uri: http://localhost:8106/oauth/token_key

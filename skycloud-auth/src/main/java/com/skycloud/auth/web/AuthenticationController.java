@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +35,11 @@ public class AuthenticationController {
     @Qualifier("consumerTokenServices")
     private ConsumerTokenServices consumerTokenServices;
 
+//    @Autowired
+//    private TokenStore tokenStore;
+
     @Autowired
-    private InMemoryTokenStore tokenStore;
+    private TokenStore jwtTokenStore;
 
     /**
      * 认证页面
@@ -82,9 +86,9 @@ public class AuthenticationController {
      */
     @PostMapping("/layout")
     public ResponseVo removeToken(String accesstoken) {
-        OAuth2AccessToken accessToken = tokenStore.readAccessToken(accesstoken);
+        OAuth2AccessToken accessToken = jwtTokenStore.readAccessToken(accesstoken);
         boolean flag = consumerTokenServices.revokeToken(accessToken.getValue());
-        tokenStore.removeAccessToken(accessToken);
+        jwtTokenStore.removeAccessToken(accessToken);
 //        tokenStore.removeRefreshToken(accessToken.getRefreshToken());
         return ResponseVo.getSuccessResult(flag);
     }

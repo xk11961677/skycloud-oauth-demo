@@ -73,7 +73,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 
 
     private void assembleGetway(ClientDetailsDO clientDetailsDO) {
-        System.out.println("========================================user");
+        System.out.println("========================================gateway");
 //        clientDetailsDO.setResourceIds("user");
         clientDetailsDO.setClientId("gateway");
         clientDetailsDO.setScope("all");

@@ -4,6 +4,7 @@ import com.skycloud.auth.security.SecurityClientDetailsServiceImpl;
 import com.skycloud.auth.security.SecurityUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +17,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +36,15 @@ import java.util.List;
 @Slf4j
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    /*  @Autowired(required = false)
-      private JwtAccessTokenConverter jwtAccessTokenConverter;
+    @Autowired(required = false)
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
 
-      @Autowired(required = false)
-      private TokenEnhancer jwtTokenEnhancer;
-  */
+    @Autowired(required = false)
+    private TokenEnhancer jwtTokenEnhancer;
+
+    @Autowired
+    private TokenStore jwtTokenStore;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -58,10 +65,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 //    public RedisTokenStore tokenStore() {
 //        return new RedisTokenStore(connectionFactory);
 //    }
-    @Bean
+    /*@Bean
     public InMemoryTokenStore tokenStore() {
         return new InMemoryTokenStore();
-    }
+    }*/
 
     //配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
     @Override
@@ -71,15 +78,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 //                .reuseRefreshTokens(true)
                 .userDetailsService(userDetailsService())//若无，refresh_token会有UserDetailsService is required错误
                 //   .tokenStore(tokenStore());
-                .tokenStore(tokenStore());
-        /*if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+                .tokenStore(jwtTokenStore);
+        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
             TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
             List<TokenEnhancer> enhancers = new ArrayList<>();
             enhancers.add(jwtTokenEnhancer);
             enhancers.add(jwtAccessTokenConverter);
             enhancerChain.setTokenEnhancers(enhancers);
             endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
-        }*/
+        }
     }
 
     //对应于配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器
