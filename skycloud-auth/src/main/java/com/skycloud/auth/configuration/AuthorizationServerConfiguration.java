@@ -1,5 +1,7 @@
 package com.skycloud.auth.configuration;
 
+import com.skycloud.auth.security.ScAuthenticationFailureHandler;
+import com.skycloud.auth.security.ScLogoutSuccessHandler;
 import com.skycloud.auth.security.SecurityClientDetailsServiceImpl;
 import com.skycloud.auth.security.SecurityUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -101,8 +105,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         clients.withClientDetails(clientDetailsService());
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    /**
+     * 退出时的处理策略配置
+     *
+     * @return logout success handler
+     */
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new ScLogoutSuccessHandler();
+    }
 }
