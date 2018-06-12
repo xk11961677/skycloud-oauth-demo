@@ -1,16 +1,19 @@
 package com.skycloud.auth.web;
 
 import com.skycloud.auth.model.domain.UserDO;
-import com.skycloud.common.base.ResponseData;
+import com.skycloud.common.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -31,6 +33,9 @@ public class AuthenticationController {
     @Autowired
     @Qualifier("consumerTokenServices")
     private ConsumerTokenServices consumerTokenServices;
+
+    @Autowired
+    private InMemoryTokenStore tokenStore;
 
     /**
      * 认证页面
@@ -49,33 +54,38 @@ public class AuthenticationController {
      */
     @RequestMapping("/user")
     public UserDO user() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDO userDO = null;
         HashSet<SimpleGrantedAuthority> authorities = new HashSet<>();
-        if (principal instanceof UserDetails) {
-//            return ((UserDetails) principal).getUsername();
-
-            userDO = new UserDO(1, "system", "123456", authorities, true);
-            return userDO;
-        }
-
-        if (principal instanceof Principal) {
-            userDO = new UserDO(1, ((Principal) principal).getName(), "123456", authorities, true);
-            return userDO;
+        OAuth2Authentication authentication = (OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        UserDO userDO = null;
+        if(authentication.isClientOnly()) {
+            //TODO  根据client 与scope查询client是否存在,存在则返回信息
+            userDO = new UserDO(1, Objects.toString(principal), Objects.toString(principal), authorities, true);
+        }else {
+            if (principal instanceof UserDetails) {
+                userDO = new UserDO(1, "system", "123456", authorities, true);
+                return userDO;
+            }
+            if (principal instanceof Principal) {
+                userDO = new UserDO(1, ((Principal) principal).getName(), "123456", authorities, true);
+                return userDO;
+            }
         }
         return userDO;
 //        return authentication.getPrincipal();
     }
 
     /**
-     * 清除Redis中 accesstoken refreshtoken
      *
      * @param accesstoken accesstoken
      * @return true/false
      */
-    @PostMapping("/removeToken")
-    public ResponseData removeToken(String accesstoken) {
-        boolean flag = consumerTokenServices.revokeToken(accesstoken);
-        return ResponseData.getSuccessResult(flag);
+    @PostMapping("/layout")
+    public ResponseVo removeToken(String accesstoken) {
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(accesstoken);
+        boolean flag = consumerTokenServices.revokeToken(accessToken.getValue());
+        tokenStore.removeAccessToken(accessToken);
+//        tokenStore.removeRefreshToken(accessToken.getRefreshToken());
+        return ResponseVo.getSuccessResult(flag);
     }
 }

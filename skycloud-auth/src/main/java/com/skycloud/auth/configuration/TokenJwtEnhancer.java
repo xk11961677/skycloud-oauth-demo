@@ -35,9 +35,7 @@ public class TokenJwtEnhancer implements TokenEnhancer {
 			Object principal = authentication.getPrincipal();
 			info.put("loginName", ((UserDetails) principal).getUsername());
 		}
-
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
-
 		return accessToken;
 	}
 

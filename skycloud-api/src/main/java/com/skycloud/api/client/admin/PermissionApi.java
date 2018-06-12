@@ -1,6 +1,6 @@
 package com.skycloud.api.client.admin;
 
-import com.skycloud.common.base.ResponseData;
+import com.skycloud.common.base.ResponseVo;
 import lombok.Data;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public interface PermissionApi {
 
 	@RequestMapping(value="/admin/permission/getMenu",method=RequestMethod.POST)
 	@ResponseBody
-	ResponseData<TestDTO> send(@RequestBody TestDTO testDTO);
+    ResponseVo<TestDTO> send(@RequestBody TestDTO testDTO);
 
 	/**
 	 * 断路器
@@ -29,8 +29,8 @@ public interface PermissionApi {
 	class PermissionApiFallback  implements PermissionApi {
 
 		@Override
-		public ResponseData send(@RequestBody TestDTO testDTO) {
-			return new ResponseData();
+		public ResponseVo send(@RequestBody TestDTO testDTO) {
+			return new ResponseVo();
 		}
 
 

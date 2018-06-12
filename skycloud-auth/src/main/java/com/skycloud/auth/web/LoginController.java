@@ -1,7 +1,7 @@
 //package com.skycloud.auth.web;
 //
 //
-//import com.skycloud.common.base.ResponseData;
+//import com.skycloud.common.base.ResponseVo;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@
 //    private ConsumerTokenServices consumerTokenServices;
 //
 //    @RequestMapping("/login")
-//    public ResponseData<OAuth2AccessToken> login(@RequestParam String username,@RequestParam String password){
+//    public ResponseVo<OAuth2AccessToken> login(@RequestParam String username,@RequestParam String password){
 //        try {
 //            logger.info("login  start ......");
 //            Map<String,String> parameters = new HashMap<>();
@@ -47,35 +47,35 @@
 //            Authentication authentication = new UsernamePasswordAuthenticationToken("webapp", "webapp",grantedAuthorities);
 //            ResponseEntity<OAuth2AccessToken> responseEntity= tokenEndpoint.postAccessToken(authentication ,parameters);
 //            logger.info("login  end ......");
-//            return  ResponseData.getSuccessResult(responseEntity.getBody());
+//            return  ResponseVo.getSuccessResult(responseEntity.getBody());
 //        }catch (InvalidGrantException e){
 //            logger.error("login error  用户名密码不正确 ....",e);
-//            return ResponseData.getFailureResult("用户名密码不正确");
+//            return ResponseVo.getFailureResult("用户名密码不正确");
 //        }
 //        catch (Exception e){
 //            logger.error("login error ....",e);
-//            return ResponseData.getFailureResult(e.getMessage());
+//            return ResponseVo.getFailureResult(e.getMessage());
 //        }
 //    }
 //
 //
 //    @GetMapping("/logouting")
-//    public ResponseData<String> logouting(String accessToken){
+//    public ResponseVo<String> logouting(String accessToken){
 //        try {
 //            logger.info("logout  start ......");
 //            consumerTokenServices.revokeToken(accessToken);
 //            logger.info("logout  end ......");
-//            return ResponseData.getSuccessResult("退出登入成功");
+//            return ResponseVo.getSuccessResult("退出登入成功");
 //        }
 //        catch (Exception e){
 //            logger.error("logout error ....",e);
-//            return ResponseData.getFailureResult(e.getMessage());
+//            return ResponseVo.getFailureResult(e.getMessage());
 //        }
 //    }
 //
 //    @GetMapping("/test")
-//    public ResponseData<String> test(){
+//    public ResponseVo<String> test(){
 //
-//        return ResponseData.getSuccessResult("String");
+//        return ResponseVo.getSuccessResult("String");
 //    }
 //}

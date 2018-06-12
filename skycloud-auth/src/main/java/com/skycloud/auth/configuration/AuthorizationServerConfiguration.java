@@ -30,14 +30,14 @@ import java.util.List;
 @Configuration
 @EnableAuthorizationServer
 @Slf4j
-public class AuthorizationServerConfiguration  extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired(required = false)
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
+    /*  @Autowired(required = false)
+      private JwtAccessTokenConverter jwtAccessTokenConverter;
 
-    @Autowired(required = false)
-    private TokenEnhancer jwtTokenEnhancer;
-
+      @Autowired(required = false)
+      private TokenEnhancer jwtTokenEnhancer;
+  */
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -45,19 +45,23 @@ public class AuthorizationServerConfiguration  extends AuthorizationServerConfig
 //    private RedisConnectionFactory connectionFactory;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new SecurityUserDetailsServiceImpl();
     }
 
     @Bean
-    public ClientDetailsService clientDetailsService(){
+    public ClientDetailsService clientDetailsService() {
         return new SecurityClientDetailsServiceImpl();
     }
 
-//    @Bean
+    //@Bean
 //    public RedisTokenStore tokenStore() {
 //        return new RedisTokenStore(connectionFactory);
 //    }
+    @Bean
+    public InMemoryTokenStore tokenStore() {
+        return new InMemoryTokenStore();
+    }
 
     //配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
     @Override
@@ -67,15 +71,15 @@ public class AuthorizationServerConfiguration  extends AuthorizationServerConfig
 //                .reuseRefreshTokens(true)
                 .userDetailsService(userDetailsService())//若无，refresh_token会有UserDetailsService is required错误
                 //   .tokenStore(tokenStore());
-                .tokenStore(new InMemoryTokenStore());
-        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+                .tokenStore(tokenStore());
+        /*if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
             TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
             List<TokenEnhancer> enhancers = new ArrayList<>();
             enhancers.add(jwtTokenEnhancer);
             enhancers.add(jwtAccessTokenConverter);
             enhancerChain.setTokenEnhancers(enhancers);
             endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
-        }
+        }*/
     }
 
     //对应于配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器

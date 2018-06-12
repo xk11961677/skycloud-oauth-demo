@@ -2,7 +2,7 @@ package com.skycloud.common.constants;
 
 /**
  */
-public class CommonConstants {
+public class GlobalConstants {
 
     // 用户token异常
     public static final Integer EX_USER_INVALID_CODE = 40101;

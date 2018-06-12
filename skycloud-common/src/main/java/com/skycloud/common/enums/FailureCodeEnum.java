@@ -1,4 +1,4 @@
-package com.skycloud.common.enumcode;
+package com.skycloud.common.enums;
 
 import java.util.Arrays;
 

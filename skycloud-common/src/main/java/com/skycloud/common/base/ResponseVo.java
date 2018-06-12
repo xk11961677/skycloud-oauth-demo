@@ -1,8 +1,8 @@
 package com.skycloud.common.base;
 
 
-import com.skycloud.common.enumcode.FailureCodeEnum;
-import com.skycloud.common.enumcode.ResultCodeEnum;
+import com.skycloud.common.enums.FailureCodeEnum;
+import com.skycloud.common.enums.ResultCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 通用返回结果类
  * @param <T>
  */
-public class ResponseData<T> implements Serializable {
+public class ResponseVo<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,50 +32,50 @@ public class ResponseData<T> implements Serializable {
     @Getter
     private T data;
 
-    public static <T> ResponseData<T> getSuccessResult(T data) {
-        ResponseData result = new ResponseData();
+    public static <T> ResponseVo<T> getSuccessResult(T data) {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         result.setData(data);
         return result;
     }
 
-    public static <T> ResponseData<T> getSuccessResult(T data, ResponseData result) {
+    public static <T> ResponseVo<T> getSuccessResult(T data, ResponseVo result) {
         result.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         result.setData(data);
         return result;
     }
 
-    public static ResponseData getSuccessResult() {
-        ResponseData result = new ResponseData();
+    public static ResponseVo getSuccessResult() {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         return result;
     }
 
-    public static <T> ResponseData<T> getFailureResult() {
-        ResponseData result = new ResponseData();
+    public static <T> ResponseVo<T> getFailureResult() {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.FAILURE.getCode());
         result.setFailureCode(FailureCodeEnum.SERVICE_EXCEPTION.getCode());
         result.setFailureMessage(FailureCodeEnum.SERVICE_EXCEPTION.getMsg());
         return result;
     }
 
-    public static <T> ResponseData<T> getFailureResult(String failureCode) {
-        ResponseData result = new ResponseData();
+    public static <T> ResponseVo<T> getFailureResult(String failureCode) {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.FAILURE.getCode());
         result.setFailureCode(failureCode);
         return result;
     }
 
-    public static <T> ResponseData<T> getFailureResult(String failureCode, String failureMessage) {
-        ResponseData result = new ResponseData();
+    public static <T> ResponseVo<T> getFailureResult(String failureCode, String failureMessage) {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.FAILURE.getCode());
         result.setFailureCode(failureCode);
         result.setFailureMessage(failureMessage);
         return result;
     }
 
-    public static <T> ResponseData<T> getFailureResult(FailureCodeEnum failureCodeEnum) {
-        ResponseData result = new ResponseData();
+    public static <T> ResponseVo<T> getFailureResult(FailureCodeEnum failureCodeEnum) {
+        ResponseVo result = new ResponseVo();
         result.setResultCode(ResultCodeEnum.FAILURE.getCode());
         result.setFailureCode(failureCodeEnum.getCode());
         result.setFailureMessage(failureCodeEnum.getMsg());
@@ -87,6 +87,6 @@ public class ResponseData<T> implements Serializable {
     }
 
     public String toString() {
-        return "ResponseData [resultCode=" + this.resultCode + ", failureCode=" + this.failureCode + ", failureMessage=" + this.failureMessage + ", data=" + this.data + "]";
+        return "ResponseVo [resultCode=" + this.resultCode + ", failureCode=" + this.failureCode + ", failureMessage=" + this.failureMessage + ", data=" + this.data + "]";
     }
 }
