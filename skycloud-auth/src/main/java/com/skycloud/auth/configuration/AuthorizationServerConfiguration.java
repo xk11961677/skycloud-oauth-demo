@@ -1,12 +1,9 @@
 package com.skycloud.auth.configuration;
 
-import com.skycloud.auth.security.ScAuthenticationFailureHandler;
-import com.skycloud.auth.security.ScLogoutSuccessHandler;
 import com.skycloud.auth.security.SecurityClientDetailsServiceImpl;
 import com.skycloud.auth.security.SecurityUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,13 +17,8 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,8 +102,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      *
      * @return logout success handler
      */
-    @Bean
+    /*@Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new ScLogoutSuccessHandler();
-    }
+    }*/
 }
