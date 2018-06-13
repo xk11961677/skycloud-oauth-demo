@@ -42,8 +42,8 @@
 //	 */
 //	public void configure(HttpSecurity http) throws Exception {
 //		http.formLogin()
-//				.loginPage("")
-//				.loginProcessingUrl("")
+//				.loginPage("/authentication/require")
+//				.loginProcessingUrl("/authentication/form")
 //				.successHandler(scAuthenticationSuccessHandler)
 //				.failureHandler(scAuthenticationFailureHandler);
 //	}

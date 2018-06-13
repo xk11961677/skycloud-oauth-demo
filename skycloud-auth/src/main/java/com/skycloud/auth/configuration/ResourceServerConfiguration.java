@@ -25,7 +25,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .formLogin().loginPage("/authentication/require")
             .loginProcessingUrl("/authentication/form")
             .and()
-            .authorizeRequests().antMatchers("/login", "/test").permitAll()
+            .authorizeRequests().antMatchers("/authentication/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .httpBasic();
